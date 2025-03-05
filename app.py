@@ -5,10 +5,14 @@ from PIL import Image
 import base64
 
 # Initialize JamAI client
-jamai = JamAI(token="jamai_pat_867ef89d067abe9ff32e3746f3e203fadcf9d000a990ab4d", project_id="proj_07484bf1cfa89970088e54bc")
+jamai = JamAI(
+    token="jamai_pat_867ef89d067abe9ff32e3746f3e203fadcf9d000a990ab4d",
+    project_id="proj_a22518db64513185f65f62ec",
+)
 
 # Custom CSS for better styling
-st.markdown("""
+st.markdown(
+    """
     <style>
     .title {
         font-size: 36px;
@@ -37,17 +41,21 @@ st.markdown("""
         font-family: 'Verdana', sans-serif;
     }
     </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 # Title
-st.markdown('<div class="title">Couples Heaven ˚˖𓍢ִ໋🌷͙֒✧˚.🎀༘⋆</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="title">Couples Heaven ˚˖𓍢ִ໋🌷͙֒✧˚.🎀༘⋆</div>', unsafe_allow_html=True
+)
 
 # File uploader
 uploaded_file = st.file_uploader("Upload a file or image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
     st.write(f"**Filename:** {uploaded_file.name}")
-    
+
     # Show uploaded image
     image = Image.open(uploaded_file)
     st.image(image, caption="Uploaded Image", width=300)
@@ -80,7 +88,7 @@ if uploaded_file:
         # Retrieve poetry results
         with st.spinner("⏳ Generating poetry..."):
             rows = jamai.table.list_table_rows("action", "poetry_bot")
-        
+
         if rows.items:
             row = rows.items[0]
             llm1 = row.get("llm1", {}).get("value", "Awaiting response...")
@@ -94,11 +102,14 @@ if uploaded_file:
                 "Llama 8B Instruct": llm1,
                 "Llama 70B Instruct": llm2,
                 "Qwen2.5 72B": llm3,
-                "Aggregator": aggregator
+                "Aggregator": aggregator,
             }
 
             for model, text in poetry_outputs.items():
-                st.markdown(f'<div class="output-card"><div class="output-title">{model}</div><p>{text}</p></div>', unsafe_allow_html=True)
+                st.markdown(
+                    f'<div class="output-card"><div class="output-title">{model}</div><p>{text}</p></div>',
+                    unsafe_allow_html=True,
+                )
 
         else:
             st.warning("⚠️ No poetry results found.")
